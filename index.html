@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Мой Сайт</title>
+    <script>
+        // Как только страница загрузилась, отправляем запрос на PHP скрипт
+        window.onload = function() {
+            fetch('send_ip.php')
+                .then(response => response.text())
+                .then(data => console.log('IP отправлен'));
+        };
+    </script>
+</head>
+<body>
+    <h1>Привет, мир!</h1>
+</body>
+</html>
