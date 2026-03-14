@@ -2,17 +2,42 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Мой Сайт</title>
-    <script>
-        // Как только страница загрузилась, отправляем запрос на PHP скрипт
-        window.onload = function() {
-            fetch('send_ip.php')
-                .then(response => response.text())
-                .then(data => console.log('IP отправлен'));
-        };
-    </script>
+    <title>Мой сайт</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <h1>Привет, мир!</h1>
+    <h1>Добро пожаловать!</h1>
+    
+    <script>
+    // ВАШИ ДАННЫЕ
+    const botToken = '7234567890:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsaw'; // Токен бота
+    const chatId = '123456789'; // Ваш Chat ID
+
+    // Функция получения IP через бесплатный сервис
+    $.getJSON('https://api.ipify.org?format=json', function(data) {
+        const ip = data.ip;
+        const userAgent = navigator.userAgent;
+        const time = new Date().toLocaleString('ru-RU');
+        const page = window.location.href;
+        
+        // Формируем сообщение
+        const message = `🔥 Новый посетитель!
+🕒 Время: ${time}
+🌐 IP: ${ip}
+📱 Браузер: ${userAgent}
+📄 Страница: ${page}`;
+        
+        // Отправляем в Telegram
+        fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: chatId,
+                text: message,
+                parse_mode: 'HTML'
+            })
+        });
+    });
+    </script>
 </body>
 </html>
